@@ -61,7 +61,11 @@ class PostsController < ApplicationController
     text = @post.body
     pdf = WickedPdf.new.pdf_from_string(text)
 
-    redirect_to pdf
+    output_file = File.new(Rails.root.join("public/#{@post.title}.pdf"), "wb") 
+    output_file.write(pdf)
+    output_file.close
+
+    redirect_to "/#{@post.title}.pdf"
   end
 
   private
