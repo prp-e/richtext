@@ -56,6 +56,14 @@ class PostsController < ApplicationController
     end
   end
 
+  def pdf_export
+    @post = Post.find(params[:id])
+    text = @post.body
+    pdf = WickedPdf.new.pdf_from_string(text)
+
+    redirect_to pdf
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_post
